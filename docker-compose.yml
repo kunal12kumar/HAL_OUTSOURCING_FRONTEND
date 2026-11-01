@@ -1,0 +1,25 @@
+# Frontend only. It needs a running backend API that this machine can reach.
+#
+#   cp .env.example .env     # set BACKEND_URL
+#   docker compose up -d --build
+#
+# The site is served on port 3000. Put a TLS-terminating reverse proxy in front of it and set COOKIE_SECURE=true.
+name: ${COMPOSE_PROJECT_NAME:-hal-frontend}
+
+services:
+  frontend:
+    build: .
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: ${BACKEND_URL:?set BACKEND_URL in .env (the backend API address)}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${WEB_BIND:-0.0.0.0}:${WEB_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "--timeout=3", "http://127.0.0.1:3000/staff/login"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
