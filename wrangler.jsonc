@@ -5,8 +5,7 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-11-02",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  // `wrangler deploy` builds the OpenNext bundle first, so Cloudflare's default deploy command works unchanged.
-  "build": { "command": "npx opennextjs-cloudflare build" },
+  // Cloudflare runs `npm run build` (OpenNext build) and then `npx wrangler deploy`.
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   // The Worker calls itself (used by Next.js for cache revalidation). The service name must equal "name" above.
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "hal-outsourcing-frontend" }],
