@@ -51,11 +51,28 @@ docker compose up -d --build    # http://localhost:3000
 For a server, put a TLS-terminating reverse proxy in front of port 3000 and keep `COOKIE_SECURE=true`.
 `BACKEND_URL` is read when the container starts, so changing it only needs `docker compose up -d`, not a rebuild.
 
+## Deploy on Cloudflare Workers
+
+The site also runs on Cloudflare Workers through the OpenNext adapter (`wrangler.jsonc`, `open-next.config.ts`).
+Connect the repository in Cloudflare with the default commands:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build` (runs the OpenNext build) |
+| Deploy command | `npx wrangler deploy` |
+| Worker name | `hal-outsourcing-frontend` (must equal `name` in `wrangler.jsonc`) |
+
+The Worker's settings are in `wrangler.jsonc` under `vars`: `BACKEND_URL` (use the HTTPS address of the API) and
+`COOKIE_SECURE`. Change them there and push; a value set only in the dashboard is replaced on the next deploy.
+
+Do not enable Next.js "Cache Components" (`cacheComponents`): it does not run correctly on the Workers runtime.
+On Windows, build with `npm run build:next` (the OpenNext build needs Linux); Cloudflare's builder runs on Linux.
+
 ## Build and checks
 
 ```bash
 npm run lint
-npm run build
+npm run build:next      # plain Next.js build (used by the Docker image)
 ```
 
 ## Layout
