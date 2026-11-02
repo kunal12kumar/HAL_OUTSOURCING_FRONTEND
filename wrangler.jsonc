@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker name in the Cloudflare dashboard.
+  "name": "hal-outsourcing-frontend",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-02",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // `wrangler deploy` builds the OpenNext bundle first, so Cloudflare's default deploy command works unchanged.
+  "build": { "command": "npx opennextjs-cloudflare build" },
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  // The Worker calls itself (used by Next.js for cache revalidation). The service name must equal "name" above.
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "hal-outsourcing-frontend" }],
+  "observability": { "enabled": true },
+  "vars": {
+    // The backend API, as seen from Cloudflare. Use HTTPS: passwords and login tokens travel on this link.
+    "BACKEND_URL": "https://hal-api.alertyai.com",
+    "COOKIE_SECURE": "true"
+  }
+}
