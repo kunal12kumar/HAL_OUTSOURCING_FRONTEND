@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Alert, Badge, Card, PageHeader, Spinner, Stat, StateBadge, Table } from "@/components/ui";
+import { Alert, Badge, Button, Card, PageHeader, Spinner, Stat, StateBadge, Table } from "@/components/ui";
 import { useUser } from "@/components/Shell";
 import { staff } from "@/lib/api";
 import { ago, date, ROLE_LABELS, titleCase } from "@/lib/format";
@@ -71,6 +71,15 @@ export default function Home() {
   return (
     <>
       <PageHeader title={`Welcome, ${user.first_name || user.username}`} subtitle={ROLE_LABELS[user.role]} />
+
+      {(user.role === "ADMIN" || user.role === "OUTSOURCING") && (
+        <Card title="AI Vendor Evaluation (demonstration)" className="mb-6" actions={<Button href="/staff/evaluation" size="sm">Open</Button>}>
+          <p className="text-sm text-slate-600">
+            Upload vendor quotations, upload a tender, and let the system compare technical compliance and comparable cost to produce an explained
+            ranking. This module runs separately from the order workflow.
+          </p>
+        </Card>
+      )}
 
       {user.role !== "ADMIN" && (
         <Card title={`Waiting for you${queue.data ? ` (${queue.data.count})` : ""}`} className="mb-6" padded={false}>

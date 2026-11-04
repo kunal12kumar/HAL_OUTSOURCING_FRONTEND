@@ -19,6 +19,7 @@ const STAFF_NAV = [
   { href: "/staff/inspections", label: "Inspections" },
   { href: "/staff/consignments", label: "Consignments" },
   { href: "/staff/vendors", label: "Vendors", roles: ["OUTSOURCING", "ADMIN"] },
+  { href: "/staff/evaluation", label: "AI Evaluation", roles: ["OUTSOURCING", "ADMIN"] },
   { href: "/staff/audit", label: "Audit log", roles: ["OUTSOURCING", "ADMIN"] },
   { href: "/staff/users", label: "Users", roles: ["ADMIN"] },
 ];
