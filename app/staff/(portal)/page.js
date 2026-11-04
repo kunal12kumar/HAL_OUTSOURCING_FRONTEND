@@ -72,11 +72,14 @@ export default function Home() {
     <>
       <PageHeader title={`Welcome, ${user.first_name || user.username}`} subtitle={ROLE_LABELS[user.role]} />
 
-      {(user.role === "ADMIN" || user.role === "OUTSOURCING") && (
-        <Card title="AI Vendor Evaluation (demonstration)" className="mb-6" actions={<Button href="/staff/evaluation" size="sm">Open</Button>}>
+      {user.role === "ADMIN" && (
+        <Card
+          title="Website workflow guide"
+          className="mb-6"
+          actions={<Button href="/staff/guide">Open the guide</Button>}
+        >
           <p className="text-sm text-slate-600">
-            Upload vendor quotations, upload a tender, and let the system compare technical compliance and comparable cost to produce an explained
-            ranking. This module runs separately from the order workflow.
+            A walkthrough of how a requirement moves through the website, from the MSR Department to finishing, including the vendor portal and the audit log. Visible to the administrator only.
           </p>
         </Card>
       )}
