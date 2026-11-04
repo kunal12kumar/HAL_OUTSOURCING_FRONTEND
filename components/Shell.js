@@ -21,6 +21,7 @@ const STAFF_NAV = [
   { href: "/staff/vendors", label: "Vendors", roles: ["OUTSOURCING", "ADMIN"] },
   { href: "/staff/audit", label: "Audit log", roles: ["OUTSOURCING", "ADMIN"] },
   { href: "/staff/users", label: "Users", roles: ["ADMIN"] },
+  { href: "/staff/guide", label: "Workflow guide", roles: ["ADMIN"] },
 ];
 
 const VENDOR_NAV = [{ href: "/vendor", label: "My orders", exact: true }];
